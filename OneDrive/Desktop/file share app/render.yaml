@@ -2,8 +2,9 @@ services:
   - type: web
     name: file-share-app
     env: node
+    rootDir: .                # 👈 tells Render to use repo root
     buildCommand: "npm install"
     startCommand: "node server.js"
     envVars:
       - key: MONGO_URI
-        sync: false   # set this in Render dashboard manually
+        sync: false            # set this in Render dashboard manually
