@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Sharing App</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f8; text-align: center; padding: 50px; }
+    .container { background: #fff; padding: 30px; border-radius: 12px; max-width: 500px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h2 { color: #333; }
+    input[type="file"] { margin: 20px 0; }
+    button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #45a049; }
+    .link-box { margin-top: 20px; padding: 12px; border: 2px dashed #666; border-radius: 8px; word-wrap: break-word; background: #f9f9f9; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📤 Share Your File</h2>
+    <form id="uploadForm">
+      <input type="file" name="file" required />
+      <br>
+      <button type="submit">Upload</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById("uploadForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      const response = await fetch("/upload", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      document.getElementById("result").innerHTML = `
+        <p>✅ File uploaded successfully!</p>
+        <div class="link-box">
+          <a href="${data.fileUrl}" target="_blank">${data.fileUrl}</a>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
